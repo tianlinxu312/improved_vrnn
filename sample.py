@@ -137,13 +137,14 @@ def main(config):
         frames, idxs = train_fns.prepare_batch(batch, config)
 
         # Find id of the sequence and decide whether to work on it or not
+        '''
         sequence_id = idxs[0]
         sequence_dir = os.path.join(samples_dir, '{:0>4}'.format(sequence_id))
         if os.path.exists(sequence_dir):
             n_seqs += frames.shape[0]
             continue
         os.makedirs(sequence_dir, exist_ok=True)
-
+        '''
         batch_size = 1
         frames = frames.repeat(batch_size, 1, 1, 1, 1)
         print("frame shape:", frames.shape)
