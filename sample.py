@@ -168,6 +168,7 @@ def main(config):
 
         # Trim extra samples
         all_preds = torch.cat(all_preds, 0)
+        print(all_preds.shape)
         all_preds = all_preds[:config['n_samples']]
 
         # Convert to numpy
