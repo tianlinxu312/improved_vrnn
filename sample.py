@@ -128,9 +128,9 @@ def main(config):
     model.eval()
     n_seqs = 0
     # for batch_idx, batch in enumerate(tqdm(val_loader, desc='Sequence loop')):
-    preds = []
+    total_preds = []
     for batch_idx, batch in enumerate(val_loader):
-
+        print(batch_idx)
         if n_seqs >= config['n_seqs']: 
             break
 
@@ -176,17 +176,15 @@ def main(config):
         targets = targets.detach().cpu().numpy().transpose(0, 1, 3, 4, 2)
         ctx = ctx.detach().cpu().numpy().transpose(0, 1, 3, 4, 2)
         all_preds = all_preds.detach().cpu().numpy().transpose(0, 1, 3, 4, 2)
-        preds.append(all_preds)
-
-
-
+        total_preds.append(all_preds)
 
         # Save samples to PNG files
         # save_samples(all_preds, targets, ctx, out_dir, sequence_id)
 
         # Update number of samples
         n_seqs += frames.shape[0]
-    preds = np.asarray(preds)
+
+    total_preds = np.asarray(total_preds)
     np.save("./OUTPUT_DIR/samples/samples.npy", preds)
 
     print('All done')
