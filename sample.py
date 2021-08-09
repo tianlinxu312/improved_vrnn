@@ -153,12 +153,7 @@ def main(config):
 
         sampling_ok = True
         while samples_done < config['n_samples']:
-            try:
-                (preds, targets), _ = train_fns.sample_step(model, config, frames)
-            except:
-                sampling_ok = False
-                break
-
+            (preds, targets), _ = train_fns.sample_step(model, config, frames)
             preds = preds[:, config['n_ctx']:].contiguous()
             preds = preds.detach()
             targets = targets.detach()
