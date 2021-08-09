@@ -38,15 +38,15 @@ def parse_args():
     # Main options
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--out_dir', required=True, type=str,
+    parser.add_argument('--out_dir', default="./outputs", type=str,
                         help='Output directory')
-    parser.add_argument('--exp_name', default=None, type=str,
+    parser.add_argument('--exp_name', default="./exp_name", type=str,
                         help='Name for the experiment output folder')
-    parser.add_argument('--dataset', required=True, type=str,
+    parser.add_argument('--dataset', default="pushbair", type=str,
                         help='Dataset to use')
 
     # Model options
-    parser.add_argument('--model', required=True, type=str,
+    parser.add_argument('--model', default="vrnn", type=str,
                         help='Type of Encoder/Decoder to use')
     parser.add_argument('--rec_loss', default='l1', type=str,
                         choices=['l1', 'l2', 'bce'],
@@ -55,9 +55,9 @@ def parse_args():
                         help='Resume training with this checkpoint path')
 
     # Hyperparameters
-    parser.add_argument('--n_ctx', required=True, type=int,
+    parser.add_argument('--n_ctx', default=2, type=int,
                         help='Number of context frames to use')
-    parser.add_argument('--n_steps', required=True, type=int,
+    parser.add_argument('--n_steps', default=28, type=int,
                         help='Number of steps to unroll the model for')
     parser.add_argument('--lr', default=1e-4, type=float,
                         help='Learning rate for the optimizer')

@@ -38,13 +38,14 @@ torch.manual_seed(1234)
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--checkpoint', required=True, type=str,
+    parser.add_argument('--checkpoint', type=str,
+                        default="../bair_baselines/vrrn_ckpts/checkpoints/00034.pth",
                         help='Path to checkpoint of the model')
-    parser.add_argument('--n_steps', default=None, type=int,
+    parser.add_argument('--n_steps', default=28, type=int,
                         help='Number of steps to predict')
-    parser.add_argument('--n_seqs', default=100, type=int,
+    parser.add_argument('--n_seqs', default=255, type=int,
                         help='Number of sequences/examples to predict')
-    parser.add_argument('--n_samples', default=10, type=int,
+    parser.add_argument('--n_samples', default=1, type=int,
                         help='Number of different samples per sequence to generate')
     args = parser.parse_args()
     config = vars(args)
@@ -85,6 +86,7 @@ def main(config):
     local_rank = 0
     config['local_rank'] = 0
     config['device'] = 'cuda:{}'.format(local_rank)
+    # config['device'] = 'cpu'
 
     train_loader, val_loader = get_dataset(config)
     print('Dataset loaded')
@@ -126,6 +128,7 @@ def main(config):
     model.eval()
     n_seqs = 0
     # for batch_idx, batch in enumerate(tqdm(val_loader, desc='Sequence loop')):
+    preds = []
     for batch_idx, batch in enumerate(val_loader):
 
         if n_seqs >= config['n_seqs']: 
@@ -173,15 +176,20 @@ def main(config):
         targets = targets.detach().cpu().numpy().transpose(0, 1, 3, 4, 2)
         ctx = ctx.detach().cpu().numpy().transpose(0, 1, 3, 4, 2)
         all_preds = all_preds.detach().cpu().numpy().transpose(0, 1, 3, 4, 2)
+        preds.append(all_preds)
+
+
+
 
         # Save samples to PNG files
-        save_samples(all_preds, targets, ctx, out_dir, sequence_id)
+        # save_samples(all_preds, targets, ctx, out_dir, sequence_id)
 
         # Update number of samples
         n_seqs += frames.shape[0]
+    preds = np.asarray(preds)
+    np.save("./OUTPUT_DIR/samples/samples.npy", preds)
 
     print('All done')
-
 
 
 if __name__ == '__main__':

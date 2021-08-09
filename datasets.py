@@ -53,13 +53,13 @@ def get_dataset(config):
         train_dataset = PushDataset(
             'train',
             config['seq_len'],
-            normalize=normalize,
+            normalize=normalize
         )
 
         val_dataset = PushDataset(
             'test',
             config['seq_len'],
-            normalize=normalize,
+            normalize=normalize
         )
 
         img_ch = 3

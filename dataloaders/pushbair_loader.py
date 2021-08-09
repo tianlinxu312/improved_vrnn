@@ -18,7 +18,6 @@ DIR_PATTERN = parse.compile('traj_{start_id:d}_to_{:d}')
 
 
 class PushDataset(Dataset):
-
     def __init__(
         self, split, seq_len, 
         img_side=64, dataset_dir=BAIRPUSH_PATH, data_augmentation=True, normalize=True):
@@ -65,7 +64,6 @@ class PushDataset(Dataset):
         # Load image
         img = cv2.imread(frame_path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
         # Resize to desired image shape
         if self.img_side != 128:
             img = cv2.resize(img, (self.img_side, self.img_side))

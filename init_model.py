@@ -11,7 +11,6 @@ import torch
 
 
 def init_model(config):
-
     # Return model by name
     if config['model'] == 'vrnn':
         from models.vrnn import Model
@@ -28,7 +27,6 @@ def init_model(config):
             config['n_ctx'],
             n_z=config['n_z'] if 'n_z' in config else 10,
         ).to(config['device'])
-
 
     # Reload checkpoint if needed
     if config['checkpoint'] is not None:
