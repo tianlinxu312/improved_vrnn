@@ -125,7 +125,7 @@ def main(config):
         os.makedirs(sample_dir, exist_ok=True)
         Parallel(n_jobs=20)(delayed(save_sample_png)(sample_dir, frame, f_id) for f_id, frame in enumerate(gt[0]))
 
-    model.eval()
+    # model.eval()
     n_seqs = 0
     # for batch_idx, batch in enumerate(tqdm(val_loader, desc='Sequence loop')):
     total_preds = []
@@ -146,6 +146,7 @@ def main(config):
 
         batch_size = 1
         frames = frames.repeat(batch_size, 1, 1, 1, 1)
+        print("frame shape:", frames.shape)
         samples_done = 0
         all_preds = []
 
