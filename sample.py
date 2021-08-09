@@ -147,7 +147,7 @@ def main(config):
         '''
         batch_size = 1
         frames = frames.repeat(batch_size, 1, 1, 1, 1)
-        print("frame shape:", frames.shape)
+        # print("frame shape:", frames.shape)
         samples_done = 0
         all_preds = []
 
@@ -165,7 +165,7 @@ def main(config):
 
         # Trim extra samples
         all_preds = torch.cat(all_preds, 0)
-        print(all_preds.shape)
+        # print(all_preds.shape)
         all_preds = all_preds[:config['n_samples']]
 
         # Convert to numpy
@@ -182,7 +182,7 @@ def main(config):
         # Update number of samples
         n_seqs += frames.shape[0]
 
-    total_preds = np.asarray(total_preds)
+    total_preds = np.squeeze(np.asarray(total_preds))
     print(total_preds.shape)
     np.save("./OUTPUT_DIR/samples/samples.npy", total_preds)
 
