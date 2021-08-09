@@ -185,6 +185,7 @@ def main(config):
         n_seqs += frames.shape[0]
 
     total_preds = np.asarray(total_preds)
+    print(total_preds.shape)
     np.save("./OUTPUT_DIR/samples/samples.npy", total_preds)
 
     print('All done')
