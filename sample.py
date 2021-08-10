@@ -154,7 +154,7 @@ def main(config):
         sampling_ok = True
         while samples_done < config['n_samples']:
             (preds, targets), _ = train_fns.sample_step(model, config, frames)
-            preds = preds[:, config['n_ctx']:].contiguous()
+            preds = preds[:, :].contiguous()
             preds = preds.detach()
             targets = targets.detach()
             all_preds.append(preds)
